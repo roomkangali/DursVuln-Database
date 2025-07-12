@@ -238,35 +238,6 @@ This script is designed to standardize and improve the accuracy of `version_matc
 python3 tools/version_refactor.py
 ```
 
-### `version_refactor.py`
-
-This script is designed to standardize and improve the accuracy of `version_match` fields within existing CVE entries across the database. It transforms flat lists of version conditions into a more structured, grouped format, which enhances the precision of vulnerability matching by the DursVulnNSE scanner.
-
-**Key Features:**
--   **Automated Traversal**: Recursively scans all `.json` files within the `cves/` directory.
--   **Intelligent Grouping**: Identifies and groups related version conditions (e.g., conditions for the same major version) into nested lists.
--   **Format Standardization**: Converts flat `version_match` arrays (e.g., `["<1.0", ">=2.0"]`) into a nested, OR-logic compatible format (e.g., `[["<1.0"], [">=2.0"]]`).
--   **In-place Update**: Overwrites the original JSON files with the refactored content, maintaining the one-line-per-entry format.
-
-**Functions:**
-
-#### `group_version_conditions(conditions)`
--   **Purpose**: Takes a flat list of version condition strings and groups them into nested lists based on their major version number. This function is the core logic for transforming the `version_match` format.
--   **Parameters**:
-    -   `conditions` (list): A list of version strings (e.g., `["<10.0.16", ">=10.0.0"]`).
--   **Returns**: A refactored list of lists (e.g., `[["<10.0.16", ">=10.0.0"]]`) or the original list if no grouping is applicable.
-
-#### `refactor_cve_files(cves_dir)`
--   **Purpose**: The main function that orchestrates the refactoring process. It iterates through all JSON files, reads their content, applies `group_version_conditions` to relevant CVE entries, and writes the updated data back to the files.
--   **Parameters**:
-    -   `cves_dir` (str): The path to the base `cves/` directory containing the individual CVE JSON files.
-
-**Usage:**
-```bash
-# Run the version refactor script
-python3 tools/version_refactor.py
-```
-
 ## 📄 Configuration Files
 
 The root directory contains the primary configuration files that drive the database generation tools.
